@@ -1,0 +1,9 @@
+From: test@test.com
+Date: Fri, 31 Oct 2025 17:48:01 +0900
+Subject: Confirm your email
+Message-Id: <2HYQR42QLRU4.J0FXCLOXYPI11@martins-mbp-2021.local>
+To: a@a.se
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+Please confirm your account by <a href='https://localhost:5101/Account/ConfirmEmail?userId=bff39083-a9aa-4413-717b-08de185a3332&code=Q2ZESjhHaWpPbWh2UUtWQWh2UnhaaDNId2RpbmF4bytsTU1RTUhrQWNQL3Q4Y3BkTFQ5Sm1mdmlUNnJjQlJOVjVyejh0cGFibHVXczZ2YnY5UUlWam5Ha1VRVjlWM0VmVkxJSkRhTkpJSEFGMmRTWFNPUmp2OTNDbjhUdmEyaC9aTUxqY2JLY2NtNFdFZUJmUUlpcWJBL3VRemNRbW5URlVEVWlJWGtWSzVWRVU0QnM0MWtrYUdWWklkR09lRGo5cHBjMk9vYm5kbzNjMUx4VmFKV1NXMHBHQk1GYllITmw2RXBsRWl5S0J3NU9WMktZTzVMME42WGxBYWkxV0ZLNVpITXVKUT09&returnUrl=%2F'>clicking here</a>.
