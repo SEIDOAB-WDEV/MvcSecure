@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Models.DTO;
 using DbModels;
 using DbContext.Extensions;
-using Models;
+using Models.Authorization;
 
 namespace DbContext;
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(MainDbContext.SqlServerDbContext))]
-    [Migration("20251216115913_miInitial")]
+    [Migration("20251216121850_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -252,32 +252,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>
-                {
-                    b.Property<int>("NrSeededAlbums")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NrSeededArtists")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NrSeededMusicGroups")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NrUnseededAlbums")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NrUnseededArtists")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NrUnseededMusicGroups")
-                        .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("vwInfoDb", "gstusr");
-                });
-
-            modelBuilder.Entity("Models.User", b =>
+            modelBuilder.Entity("Models.Authorization.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,6 +271,12 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("varchar(200)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -343,6 +324,31 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>
+                {
+                    b.Property<int>("NrSeededAlbums")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrSeededArtists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrSeededMusicGroups")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededAlbums")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededArtists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededMusicGroups")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoDb", "gstusr");
+                });
+
             modelBuilder.Entity("ArtistDbMMusicGroupDbM", b =>
                 {
                     b.HasOne("DbModels.ArtistDbM", null)
@@ -380,7 +386,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Models.User", null)
+                    b.HasOne("Models.Authorization.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -389,7 +395,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Models.User", null)
+                    b.HasOne("Models.Authorization.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,7 +410,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Models.User", null)
+                    b.HasOne("Models.Authorization.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -413,7 +419,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Models.User", null)
+                    b.HasOne("Models.Authorization.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
