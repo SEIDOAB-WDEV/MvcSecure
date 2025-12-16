@@ -75,6 +75,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
     app.UseDeveloperExceptionPage();
 }
+
 app.UseHttpsRedirection();
 
 //Use static files css, html, and js

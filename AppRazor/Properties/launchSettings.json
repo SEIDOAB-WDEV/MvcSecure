@@ -34,7 +34,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "AppMusicRazor": {
+    "AppRazor": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:11774;http://localhost:29556",

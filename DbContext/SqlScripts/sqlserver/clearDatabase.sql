@@ -2,7 +2,6 @@ USE [sql-music];
 --GO
 
 -- remove stored procedures
-DROP PROCEDURE IF EXISTS gstusr.spLogin
 DROP PROCEDURE IF EXISTS supusr.spDeleteAll
 GO
 

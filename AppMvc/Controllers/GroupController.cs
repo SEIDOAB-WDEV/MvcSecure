@@ -270,6 +270,9 @@ namespace AppMvc.Controllers
             //Repopulate the InputModel
             vm.MusicGroupInput = new EditGroupViewModel.MusicGroupIM(mg.Item);
 
+            //Clear ModelState to ensure the page displays the updated values
+            ModelState.Clear();
+
             return View("EditGroup", vm);
         }
 

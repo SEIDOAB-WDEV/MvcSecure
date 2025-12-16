@@ -18,7 +18,7 @@ public class SeedController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Seed()
     {
         //Use the Service
         var info = await _admin_service.GuestInfoAsync();
