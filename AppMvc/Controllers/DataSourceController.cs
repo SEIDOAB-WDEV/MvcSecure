@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 using AppMvc.Models;
 using Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppMvc.Controllers;
-
+[Authorize]
 public class DataSourceController : Controller
 {
     private readonly ILogger<DataSourceController> _logger;

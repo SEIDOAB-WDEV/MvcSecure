@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 using Models.Interfaces;
+using Models.Authorization;
 using Services;
 
 namespace AppRazor.Pages
 {
     public class ListOfGroupsModel : PageModel
     {
+        readonly IAuthorizationService _autService = null;
         readonly IMusicGroupsService _service = null;
         readonly ILogger<ListOfGroupsModel> _logger = null;
 
@@ -78,6 +81,14 @@ namespace AppRazor.Pages
 
         public async Task<IActionResult> OnPostDeleteGroup(Guid groupId)
         {
+            //Model level CRUD authorization
+            var mg = await _service.ReadMusicGroupAsync(groupId, true);
+            var result = await _autService.AuthorizeAsync(User, mg, CrudOperations.Delete);
+            if (!result.Succeeded)
+            {
+                return Forbid();
+            }
+
             await _service.DeleteMusicGroupAsync(groupId);
 
             //Use the Service
@@ -92,10 +103,11 @@ namespace AppRazor.Pages
         }
 
         //Inject services just like in WebApi
-        public ListOfGroupsModel(IMusicGroupsService service, ILogger<ListOfGroupsModel> logger)
+        public ListOfGroupsModel(IMusicGroupsService service, ILogger<ListOfGroupsModel> logger, IAuthorizationService autService)
         {
             _service = service;
             _logger = logger;
+            _autService = autService;
         }
     }
 }

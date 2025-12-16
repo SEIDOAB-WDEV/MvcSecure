@@ -1,10 +1,14 @@
-To create the AppWebApi, AppMvc and AppRazor
-All applications are using the same software stack
+To create the secure AppMvc and AppRazor using Microsoft Identity
+Both applications are using the same software stack
+
+NOTE: the WebApi application is now removed for simplicity. 
+      To shift datasource from database access to WebApi access
+        - a local public WebWapi can be created in separate project and started
+        - alternatively a published public WebApi can be accessed
 
 1. Create the database. With Terminal in folder _scripts 
-   E.g. database name: sql-music, database type: sqlserver, server: docker, default user: dbo, application: ../AppWebApi
-   use application as ../AppWebApi, ../AppRazor or ../AppMvc depending on application you want to build database for.
-   
+   E.g. database name: sql-music, database type: sqlserver, server: docker, default user: dbo, application: ../AppRazor
+
    macOs
    ./database-rebuild-all.sh sql-music sqlserver docker dbo ../AppRazor
    ./database-rebuild-all.sh sql-music mysql docker dbo ../AppRazor
@@ -16,6 +20,7 @@ All applications are using the same software stack
    ./database-rebuild-all.ps1 sql-music postgresql docker dbo ../AppRazor
 
    Ensure no errors from build, migration or database update
+   ../AppRazor above can be exchanged to ../AppMvc
 
 2. From Azure Data Studio you can now connect to the database
    Use connection string from user secrets:
@@ -24,19 +29,13 @@ All applications are using the same software stack
 
 3. Use Azure Data Studio to execute SQL script DbContext/SqlScripts/<db_type>/azure/initDatabase.sql
 
+4. Run AppRazor or AppMvc with debugger
 
+5. Register a user and Login
 
-Running AppRazor using WebApi or Database as source:
-----------------------------------------------------
+6. Seed the database
 
-4. We are not using security in this verions, so ensure that in appsettings.json 
-   "DefaultDataUser": "dbo"
-
-5. Run AppRazor or AppMvc with debugger
-
-   Use menu alternative to seed and play around with data from the database
-
-6. Use menu Select datasource to WebApi and see that you can access same data but through the WebApi
+7. Login and logout as a user to see how access is restricted for non loggen in users
    
 NOTE: From AppRazor and AppMvc perspective, the ONLY change is the DataAccess services injected to the DI 
       This is one of the strength of a well made software stack with loosly couple objects and alyers

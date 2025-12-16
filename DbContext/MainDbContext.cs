@@ -1,15 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
 using Models.DTO;
 using DbModels;
 using DbContext.Extensions;
+using Models.Authorization;
+
 
 namespace DbContext;
 
 //DbContext namespace is a fundamental EFC layer of the database context and is
 //used for all Database connection as well as for EFC CodeFirst migration and database updates 
-public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
+public class MainDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
 #if DEBUG
     // remove password from connection string in debug mode
@@ -23,6 +28,10 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<MusicGroupDbM> MusicGroups { get; set; }
     public DbSet<AlbumDbM> Albums { get; set; }
     public DbSet<ArtistDbM> Artists { get; set; } 
+
+    //User for login
+    //now created by Identity
+    //public DbSet<UserDbM> Users { get; set; }
     #endregion
 
     #region constructors

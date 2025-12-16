@@ -1,11 +1,18 @@
-﻿using Services;
+﻿using Microsoft.AspNetCore.Authorization;
+
+using Services;
 using Configuration.Extensions;
 using DbContext.Extensions;
 using DbRepos;
+using Models.Authorization;
 using Encryption.Extensions;
 
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(option =>
+{
+    option.Conventions.AuthorizeFolder("/Members");
+});
 
 //adding support for several secret sources and database sources
 //to use either user secrets or azure key vault depending on UseAzureKeyVault tag in appsettings.json
@@ -20,6 +27,30 @@ builder.Services.AddUserBasedDbContext();
 builder.Services.AddVersionInfo();
 builder.Services.AddEnvironmentInfo();
 
+
+//Add IdentityServices to DbContext.MainDbContext
+builder.Services.AddDefaultIdentity<User>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.SignIn.RequireConfirmedAccount = false;
+}).AddEntityFrameworkStores<DbContext.MainDbContext>();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.SlidingExpiration = true;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; // Allow both HTTP and HTTPS in development
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.Name = "GoodMusicAuth";
+});
+
 #region Injecting a dependency service to read MusicWebApi
 builder.Services.AddHttpClient(name: "MusicWebApi", configureClient: options =>
 {
@@ -30,6 +61,11 @@ builder.Services.AddHttpClient(name: "MusicWebApi", configureClient: options =>
             quality: 1.0));
 });
 
+//Model Authorization
+builder.Services.AddSingleton<IAuthorizationHandler, MusicGroupAuthorizationHandler>();
+
+//Used for Identity email verification
+builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailService>();
 
 //Inject DbRepos and Services
 builder.Services.AddScoped<AdminDbRepos>();
@@ -75,6 +111,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
     app.UseDeveloperExceptionPage();
 }
+
 app.UseHttpsRedirection();
 
 //Use static files css, html, and js

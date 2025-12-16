@@ -11,4 +11,9 @@
     <ProjectReference Include="..\DbRepos\DbRepos.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.14.1" />
+  </ItemGroup>
+
 </Project>

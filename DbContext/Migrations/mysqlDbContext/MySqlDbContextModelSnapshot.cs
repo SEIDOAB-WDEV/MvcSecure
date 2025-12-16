@@ -17,7 +17,7 @@ namespace DbContext.Migrations.mysqlDbContext
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -127,7 +127,7 @@ namespace DbContext.Migrations.mysqlDbContext
                     b.Property<string>("Email")
                         .HasColumnType("varchar(200)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 

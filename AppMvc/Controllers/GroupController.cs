@@ -4,13 +4,15 @@ using AppMvc.SeidoHelpers;
 using Microsoft.AspNetCore.Mvc;
 
 using Models.DTO;
-using Models.Interfaces;
 using Services;
+using Microsoft.AspNetCore.Authorization;
+using Models.Interfaces;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AppMvc.Controllers
 {
+    [Authorize] // Apply authorization to the entire controller
     public class GroupController : Controller
     {
         //Just like for WebApi
@@ -29,6 +31,7 @@ namespace AppMvc.Controllers
         }
 
         #region ListOfGroups handling
+        [AllowAnonymous] // Allow anonymous access to view the list
         public async Task<IActionResult> ListOfGroups(int pagenr, string search)
         {
             //Create the viewModel
@@ -65,6 +68,7 @@ namespace AppMvc.Controllers
             return View("ListOfGroups", vm);
         }
 
+        [AllowAnonymous] // Allow anonymous access to search
         public async Task<IActionResult> SearchGroup(ListOfGroupsViewModel vm)
         {
             //Use the Service
@@ -81,6 +85,7 @@ namespace AppMvc.Controllers
         #endregion
 
         #region ViewGroup handling
+        [AllowAnonymous] // Allow anonymous access to view individual groups
         public async Task<IActionResult> ViewGroup(Guid id) 
         {
             Guid _groupId = id;
@@ -269,6 +274,9 @@ namespace AppMvc.Controllers
 
             //Repopulate the InputModel
             vm.MusicGroupInput = new EditGroupViewModel.MusicGroupIM(mg.Item);
+
+            //Clear ModelState to ensure the page displays the updated values
+            ModelState.Clear();
 
             return View("EditGroup", vm);
         }
