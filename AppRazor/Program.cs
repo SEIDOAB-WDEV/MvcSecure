@@ -3,6 +3,7 @@ using Configuration.Extensions;
 using DbContext.Extensions;
 using DbRepos;
 using Encryption.Extensions;
+using Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -19,6 +20,15 @@ builder.Services.AddUserBasedDbContext();
 // adding version and environment info
 builder.Services.AddVersionInfo();
 builder.Services.AddEnvironmentInfo();
+
+//Add IdentityServices to DbContext.MainDbContext
+builder.Services.AddDefaultIdentity<User>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.SignIn.RequireConfirmedAccount = false;
+}).AddEntityFrameworkStores<DbContext.MainDbContext>();
 
 #region Injecting a dependency service to read MusicWebApi
 builder.Services.AddHttpClient(name: "MusicWebApi", configureClient: options =>
