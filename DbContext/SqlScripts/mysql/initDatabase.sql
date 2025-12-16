@@ -19,12 +19,12 @@ DELIMITER $$
 CREATE OR REPLACE DEFINER='dbo'@'%' PROCEDURE supusr_spDeleteAll(
     IN seededParam BOOLEAN,
     OUT nrMusicGroupsAffected INT,
-    OUT nrAlbumsffected INT,
+    OUT nrAlbumsAffected INT,
     OUT nrArtistsAffected INT
 )
 BEGIN
     SELECT  COUNT(*) INTO nrMusicGroupsAffected FROM supusr_MusicGroups WHERE Seeded = seededParam;
-    SELECT  COUNT(*) INTO nrAlbumsffected FROM supusr_Albums WHERE Seeded = seededParam;
+    SELECT  COUNT(*) INTO nrAlbumsAffected FROM supusr_Albums WHERE Seeded = seededParam;
     SELECT  COUNT(*) INTO nrArtistsAffected FROM supusr_Artists WHERE Seeded = seededParam;
     
     DELETE FROM supusr_MusicGroups WHERE Seeded = seededParam;

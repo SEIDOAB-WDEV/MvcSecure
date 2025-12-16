@@ -1,9 +1,0 @@
-From: test@test.com
-Date: Wed, 29 Oct 2025 13:33:29 +0900
-Subject: Confirm your email
-Message-Id: <4WSO1522LRU4.7F2J9ZLQO3SX1@martins-mbp-2021.local>
-To: martin@lenart.se
-MIME-Version: 1.0
-Content-Type: text/html; charset=utf-8
-
-Please confirm your account by <a href='https://localhost:5101/Account/ConfirmEmail?userId=8bcc8bcc-2470-4eef-ec35-08de16a44f5c&code=Q2ZESjhHaWpPbWh2UUtWQWh2UnhaaDNId2RpYUtkNkdCQ1VEeEdaa2h1MjFQWmlYQUd5V2hmRW5tQ3lhRTgwSHFvVEFBVUF6ZUd6elhWeUMxWkhlQWV3TGg4NUlKSlFCeEVnNllFNEMyOFg2OG9JcU5qN1UrMk9jaGZXTHIzeWFoN290WVJ3RHM1Y1lzbzgzUUVZWVo4Qnh5cVlOMmVPUXhWMkdscEU5SGgxSmxRb0llUElmUm8wWjhYZ0RSMjAySHBKVnB2cytMRUlscmFQT3pPc2NOUEtud0dkb1FnS3dXSFVsZ0dmSVNjOCtLOFdIUlM0bWtUQVpJYTYvNXFGQTM2UkJ0UT09&returnUrl=%2F'>clicking here</a>.

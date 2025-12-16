@@ -11,6 +11,8 @@ public class VersionOptions
     public string AppEnvironment { get; set; }
     public string AssemblyVersion { get; set; }
     public string FileVersion { get; set; }
+
+#if DEBUG
     public string InformationalVersion { get; set; }
     public string GitCommitHash { get; set; }
 
@@ -18,6 +20,7 @@ public class VersionOptions
     public string BuildTime { get; set; }
     public string BuildMachine { get; set; }
     public string BuildUser { get; set; }
+#endif
 
     public string Company { get; set; }
     public string Product { get; set; }
@@ -41,13 +44,15 @@ public class VersionOptions
 
         options.AssemblyVersion = assemblyName.Version?.ToString() ?? "Unknown";
         options.FileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? "Unknown";
+
+#if DEBUG
         options.InformationalVersion = informationalVersion;
         options.GitCommitHash = gitCommitHash;
 
         options.BuildTime = GetAssemblyMetadata(assembly, "BuildTime") ?? "Unknown";
         options.BuildMachine = GetAssemblyMetadata(assembly, "BuildMachine") ?? "Unknown";
         options.BuildUser = GetAssemblyMetadata(assembly, "BuildUser") ?? "Unknown";
-
+#endif
         options.Company = assembly.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company ?? "Unknown";
         options.Product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product ?? "Unknown";
         options.Description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description ?? "Unknown";

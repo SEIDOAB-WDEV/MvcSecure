@@ -1,15 +1,7 @@
 ﻿@page
 @model AppRazor.Pages.ListOfGroupsModel
-@using Microsoft.AspNetCore.Authorization;
-@using Microsoft.AspNetCore.Identity;
-
-@using Models.Authorization;
-@inject IAuthorizationService _authService;
-
 @{
     ViewData["Title"] = "List groups";
-    var authResult = await _authService.AuthorizeAsync(User, Model.MusicGroups.FirstOrDefault(), CrudOperations.Delete);
-
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @attribute [IgnoreAntiforgeryToken]
@@ -40,13 +32,10 @@
                     <!-- This is where selected item id will be stored -->
                     <input type="hidden" name="groupId" data-seido-selected-item-id-target />
 
-                    <div class="@(authResult.Succeeded?"col-md-10": "col-md-12") themed-grid-head-col">Group Name</div>
-                    @if (authResult.Succeeded)
-                    {
-                        <div class="col-md-2 themed-grid-head-col">
-                            <a href="~/Members/EditGroup" class="btn btn-success btn-sm m-1" type="button">New</a>
-                        </div>
-                    }
+                    <div class="col-md-10 themed-grid-head-col">Group Name</div>
+                    <div class="col-md-2 themed-grid-head-col">
+                        <a href="~/Members/EditGroup" class="btn btn-success btn-sm m-1" type="button">New</a>
+                    </div>
                 </div>
 
                 <div class="row mb-2 text-center">
@@ -55,13 +44,11 @@
                         {
                             @foreach (var item in Model.MusicGroups)
                             {
-                                <div class="@(User.Identity.IsAuthenticated?"col-md-10": "col-md-12") themed-grid-col">
+                                <div class="col-md-10 themed-grid-col">
                                     <a href="~/ViewGroup?id=@item.MusicGroupId">
                                         @item.Name
                                     </a>
                                 </div>
-                                @if (authResult.Succeeded)
-                                {
                                     <div class="col-md-2 themed-grid-col">
                                         <a href="~/Members/EditGroup?id=@item.MusicGroupId" class="btn btn-secondary btn-sm m-1" type="button">Edit</a>
 
@@ -72,7 +59,6 @@
                                             Del
                                         </button>
                                     </div>
-                                }
                             }
                             <nav aria-label="Standard pagination example">
                                 <ul class="pagination">

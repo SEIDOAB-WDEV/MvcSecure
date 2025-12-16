@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW gstusr."vwInfoDb" AS
 CREATE OR REPLACE FUNCTION supusr."spDeleteAll"(
     seededParam BOOLEAN DEFAULT true,
     OUT nrMusicGroupsAffected INTEGER,
-    OUT nrAlbumsffected INTEGER,
+    OUT nrAlbumsAffected INTEGER,
     OUT nrArtistsAffected INTEGER
 )
 RETURNS RECORD
@@ -27,7 +27,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     SELECT COUNT(*) INTO nrMusicGroupsAffected FROM supusr."MusicGroups" WHERE "Seeded" = seededParam;
-    SELECT COUNT(*) INTO nrAlbumsffected FROM supusr."Albums" WHERE "Seeded" = seededParam;
+    SELECT COUNT(*) INTO nrAlbumsAffected FROM supusr."Albums" WHERE "Seeded" = seededParam;
     SELECT COUNT(*) INTO nrArtistsAffected FROM supusr."Artists" WHERE "Seeded" = seededParam;
 
     DELETE FROM supusr."MusicGroups" WHERE "Seeded" = seededParam;

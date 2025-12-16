@@ -1,9 +1,0 @@
-From: test@test.com
-Date: Wed, 29 Oct 2025 13:42:07 +0900
-Subject: Confirm your email
-Message-Id: <098DOI42LRU4.6ACNDNDP3GSZ@martins-mbp-2021.local>
-To: aa@bb.se
-MIME-Version: 1.0
-Content-Type: text/html; charset=utf-8
-
-Please confirm your account by <a href='https://localhost:5201/Accounts/RegisterSave?userId=65b9781c-fbed-46c7-6b23-08de16a583fb&code=Q2ZESjhHaWpPbWh2UUtWQWh2UnhaaDNId2RodGErRmFJdHMyUXFDWmw2Qk5UcGk3cUl0ay9FMW53SllpOHVsSWxEMDJpZStnd0dCWTg2VThwcmc4TklTTjJ6c0NoNFoyakdZOW9xV0wwWDlnNmJqNmFXbHZMb2xYSkZ5aDJFd3Q4WEplZmFQZVF2QXlOOGl4OUVUWW40UXp5SzUvaTZUVzlBVjZaWGMxeFZLRS93VnkyMUY2UlRoZlA0b0FZTVZERzJlU2grLzNqdEdwbUpKMHVTUVlLdktlUmxmUkdpRGRLM3J0THUzSmEwUDdjRk5weTRBaFd6ajE2eGRvUWwyMm5tVUhXZz09&returnUrl=%2F&page=%2FAccount%2FConfirmEmail'>clicking here</a>.
