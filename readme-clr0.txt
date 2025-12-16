@@ -29,6 +29,11 @@ NOTE: the WebApi application is now removed for simplicity.
 
 3. Use Azure Data Studio to execute SQL script DbContext/SqlScripts/<db_type>/azure/initDatabase.sql
 
+
+
+Running AppRazor using WebApi or Database as source:
+----------------------------------------------------
+
 4. Run AppRazor or AppMvc with debugger
 
 5. Register a user and Login
