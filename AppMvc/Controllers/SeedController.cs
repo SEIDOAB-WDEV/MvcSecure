@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using AppMvc.Models;
 using Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AppMvc.Controllers;
-[Authorize]
+
 public class SeedController : Controller
 {
     readonly ILogger<SeedController> _logger;
@@ -19,7 +18,7 @@ public class SeedController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Seed()
+    public async Task<IActionResult> Index()
     {
         //Use the Service
         var info = await _admin_service.GuestInfoAsync();

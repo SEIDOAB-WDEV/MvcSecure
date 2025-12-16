@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DbContext.Migrations.mysqlDbContext
+namespace DbContext.Migrations.SqlServerDbContext
 {
     /// <inheritdoc />
     public partial class miInitial : Migration
@@ -14,84 +14,50 @@ namespace DbContext.Migrations.mysqlDbContext
             migrationBuilder.EnsureSchema(
                 name: "supusr");
 
-            migrationBuilder.EnsureSchema(
-                name: "dbo");
-
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "Artists",
                 schema: "supusr",
                 columns: table => new
                 {
-                    ArtistId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FirstName = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    BirthDay = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Seeded = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    ArtistId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(200)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(200)", nullable: false),
+                    BirthDay = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Artists", x => x.ArtistId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "MusicGroups",
                 schema: "supusr",
                 columns: table => new
                 {
-                    MusicGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    strGenre = table.Column<string>(type: "varchar(200)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MusicGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "varchar(200)", nullable: false),
+                    strGenre = table.Column<string>(type: "varchar(200)", nullable: true),
                     EstablishedYear = table.Column<int>(type: "int", nullable: false),
                     Genre = table.Column<int>(type: "int", nullable: false),
-                    Seeded = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MusicGroups", x => x.MusicGroupId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                schema: "dbo",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserName = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Password = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserRole = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "varchar(200)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Albums",
                 schema: "supusr",
                 columns: table => new
                 {
-                    AlbumId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "varchar(200)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MusicGroupDbMMusicGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    AlbumId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "varchar(200)", nullable: false),
+                    MusicGroupDbMMusicGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ReleaseYear = table.Column<int>(type: "int", nullable: false),
                     CopiesSold = table.Column<long>(type: "bigint", nullable: false),
-                    Seeded = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,16 +69,15 @@ namespace DbContext.Migrations.mysqlDbContext
                         principalTable: "MusicGroups",
                         principalColumn: "MusicGroupId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "ArtistDbMMusicGroupDbM",
                 schema: "supusr",
                 columns: table => new
                 {
-                    ArtistsDbMArtistId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    MusicGroupsDbMMusicGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    ArtistsDbMArtistId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MusicGroupsDbMMusicGroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,8 +96,7 @@ namespace DbContext.Migrations.mysqlDbContext
                         principalTable: "MusicGroups",
                         principalColumn: "MusicGroupId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Albums_MusicGroupDbMMusicGroupId",
@@ -157,10 +121,6 @@ namespace DbContext.Migrations.mysqlDbContext
             migrationBuilder.DropTable(
                 name: "ArtistDbMMusicGroupDbM",
                 schema: "supusr");
-
-            migrationBuilder.DropTable(
-                name: "Users",
-                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "Artists",

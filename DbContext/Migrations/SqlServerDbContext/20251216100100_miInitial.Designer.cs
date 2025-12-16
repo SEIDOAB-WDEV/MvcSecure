@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DbContext.Migrations.mysqlDbContext
+namespace DbContext.Migrations.SqlServerDbContext
 {
-    [DbContext(typeof(MainDbContext.MySqlDbContext))]
-    [Migration("20251024081331_miInitial")]
+    [DbContext(typeof(MainDbContext.SqlServerDbContext))]
+    [Migration("20251216100100_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -20,18 +20,18 @@ namespace DbContext.Migrations.mysqlDbContext
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ArtistDbMMusicGroupDbM", b =>
                 {
                     b.Property<Guid>("ArtistsDbMArtistId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MusicGroupsDbMMusicGroupId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ArtistsDbMArtistId", "MusicGroupsDbMMusicGroupId");
 
@@ -44,13 +44,13 @@ namespace DbContext.Migrations.mysqlDbContext
                 {
                     b.Property<Guid>("AlbumId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("CopiesSold")
                         .HasColumnType("bigint");
 
                     b.Property<Guid>("MusicGroupDbMMusicGroupId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -60,7 +60,7 @@ namespace DbContext.Migrations.mysqlDbContext
                         .HasColumnType("int");
 
                     b.Property<bool>("Seeded")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.HasKey("AlbumId");
 
@@ -73,10 +73,10 @@ namespace DbContext.Migrations.mysqlDbContext
                 {
                     b.Property<Guid>("ArtistId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("BirthDay")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -87,7 +87,7 @@ namespace DbContext.Migrations.mysqlDbContext
                         .HasColumnType("varchar(200)");
 
                     b.Property<bool>("Seeded")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.HasKey("ArtistId");
 
@@ -98,7 +98,7 @@ namespace DbContext.Migrations.mysqlDbContext
                 {
                     b.Property<Guid>("MusicGroupId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("EstablishedYear")
                         .HasColumnType("int");
@@ -111,7 +111,7 @@ namespace DbContext.Migrations.mysqlDbContext
                         .HasColumnType("varchar(200)");
 
                     b.Property<bool>("Seeded")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("strGenre")
                         .HasColumnType("varchar(200)");
@@ -119,32 +119,6 @@ namespace DbContext.Migrations.mysqlDbContext
                     b.HasKey("MusicGroupId");
 
                     b.ToTable("MusicGroups", "supusr");
-                });
-
-            modelBuilder.Entity("DbModels.UserDbM", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("UserRole")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users", "dbo");
                 });
 
             modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>

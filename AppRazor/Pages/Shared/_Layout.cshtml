@@ -3,12 +3,11 @@
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.Extensions.Options
 @using Models;
-@using Models.Authorization;
 @using Configuration;
 @inject Services.IMusicServiceActive musicServiceActive;
 @inject IConfiguration configuration;
 @inject IOptions<EnvironmentOptions> envOptions;
-@inject UserManager<User> userManager;
+
 @{}
 
 <html lang="en" data-bs-theme="auto">
@@ -23,7 +22,7 @@
     <meta name="author" content="Martin Lenart, Seido AB">
 
     <!-- Modified from index.cshtml-->
-    <title>@ViewData["Title"] - AppRazor</title>
+    <title>@ViewData["Title"] - AppMusicRazor</title>
 
     <!--From index.cshtml-->
     <link rel="apple-touch-icon" sizes="180x180" href="~/favicon_io/apple-touch-icon.png">
@@ -77,22 +76,8 @@
                 <li class="nav-item"><a href="~/Index" class="nav-link" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="~/ListOfGroups" class="nav-link">Famous groups</a></li> 
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item"><a href="~/Members/SelectDataSource" class="nav-link">Select datasource</a></li>
-                    <li class="nav-item"><a href="~/Members/Seed" class="nav-link">Seed</a></li>
-                }
-
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item"><a href="~/Account/Login" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="~/Account/Register" class="nav-link">Register</a></li>
-                }
-                else
-                {
-                    var usr = await userManager.GetUserAsync(User);
-                    <li class="nav-item"><a href="~/Account/Logout" class="nav-link">@usr.FirstName Logout</a></li>
-                }
+                <li class="nav-item"><a href="~/Members/SelectDataSource" class="nav-link">Select datasource</a></li>
+                <li class="nav-item"><a href="~/Members/Seed" class="nav-link">Seed</a></li>
             </ul>
         </header>
     </div>

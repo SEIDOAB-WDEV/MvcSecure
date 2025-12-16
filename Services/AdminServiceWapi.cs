@@ -36,7 +36,7 @@ public class AdminServiceWapi : IAdminService
         HttpResponseMessage response = await _httpClient.GetAsync(uri);
 
         //Throw an exception if the response is not successful
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessStatusMessage();
 
         //Get the response body
         string s = await response.Content.ReadAsStringAsync();
@@ -53,7 +53,7 @@ public class AdminServiceWapi : IAdminService
         HttpResponseMessage response = await _httpClient.GetAsync(uri);
 
         //Throw an exception if the response is not successful
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessStatusMessage();
 
         //Get the response body
         string s = await response.Content.ReadAsStringAsync();
@@ -68,12 +68,17 @@ public class AdminServiceWapi : IAdminService
         HttpResponseMessage response = await _httpClient.GetAsync(uri);
 
         //Throw an exception if the response is not successful
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessStatusMessage();
 
         //Get the response body
         string s = await response.Content.ReadAsStringAsync();
         var info = JsonConvert.DeserializeObject<ResponseItemDto<GstUsrInfoAllDto>>(s);
         return info;
+    }
+
+    public Task<ResponseItemDto<UsrInfoDto>> SeedUsersAsync(int nrOfUsers, int nrOfSuperUsers, int nrOfSysAdmin)
+    {
+        throw new NotImplementedException();
     }
 }
 

@@ -191,10 +191,6 @@ namespace AppRazor.Pages
 
             //Repopulate the InputModel
             MusicGroupInput = new MusicGroupIM(mg.Item);
-            
-            //Clear ModelState to ensure the page displays the updated values
-            ModelState.Clear();
-            
             return Page();
         }
 
