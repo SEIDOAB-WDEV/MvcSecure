@@ -11,7 +11,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5183",
+      "applicationUrl": "http://localhost:5100",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -20,24 +20,15 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "https://localhost:5101",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "MyOwn": "Hello from Martin"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "AppRazor": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:11774;http://localhost:29556",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
