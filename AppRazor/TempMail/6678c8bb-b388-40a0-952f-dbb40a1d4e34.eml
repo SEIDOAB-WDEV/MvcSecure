@@ -1,0 +1,9 @@
+From: test@test.com
+Date: Thu, 18 Dec 2025 10:00:23 +0100
+Subject: Confirm your email
+Message-Id: <C0THEIDF0SU4.23K19YXVBVTN3@r9zbvwe.learnet.se>
+To: m@m.se
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+Please confirm your account by <a href='https://localhost:5101/Account/ConfirmEmail?userId=b3c744c5-cb4a-42d3-d86d-08de3e133d9f&code=Q2ZESjhDVUlmMmlFdmdoSXJMVDJRREJaSVE5UEtaTDhlUm9lUVZjU2FYYlorRlZrNHo5WXc2dmR0WU4rTktjNCs0Q2liNjhZV0xqeURxRW85c3kxT08yQ0VHSFJOUWtzdms5TDM4NVd0bk12b29UOXBMdXVpWTJWQWpmY0VZY0xYVUtJU0FLTWtsQnk2NGNLRVozV3gxbWlENE90SG42ZkVYV1MyQ2Q1aDZUVjRuM1prVUdGUGVBSjNPV2VPaS9nSWxWeUtCZmpUNWJsVzRHWjZ6SnVSaUt0bG1lUjlFVzI0Q3E2NklBOHlZZ28rdVVEQjgwYmg2aU5CTzZkS2JmazVRbUI3UT09&returnUrl=%2F'>clicking here</a>.

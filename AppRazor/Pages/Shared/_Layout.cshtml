@@ -4,6 +4,9 @@
 @using Microsoft.Extensions.Options
 @using Models;
 @using Configuration;
+@using Models.Authorization
+
+@inject UserManager<User> userManager;
 @inject Services.IMusicServiceActive musicServiceActive;
 @inject IConfiguration configuration;
 @inject IOptions<EnvironmentOptions> envOptions;
@@ -76,7 +79,16 @@
                 <li class="nav-item"><a href="~/Index" class="nav-link" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="~/ListOfGroups" class="nav-link">Famous groups</a></li> 
 
-                <li class="nav-item"><a href="~/Account/Register" class="nav-link">Register</a></li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item"><a href="~/Account/Login" class="nav-link">Login</a></li>
+                    <li class="nav-item"><a href="~/Account/Register" class="nav-link">Register</a></li>
+                }
+                else
+                {
+                    var usr = await userManager.GetUserAsync(User);
+                    <li class="nav-item"><a href="~/Account/Logout" class="nav-link">@usr.FirstName Logout</a></li>
+                }
 
 
                 <li class="nav-item"><a href="~/Members/SelectDataSource" class="nav-link">Select datasource</a></li>
