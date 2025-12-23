@@ -1,0 +1,9 @@
+From: test@test.com
+Date: Tue, 23 Dec 2025 09:35:40 +0100
+Subject: Confirm your email
+Message-Id: <2WT54ABY1SU4.EILQZ9K6VL723@martins-mbp-2021.local>
+To: santa@pool.se
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+Please confirm your account by <a href='http://localhost:5100/Account/ConfirmEmail?userId=a90e935b-cd08-4b95-d7eb-08de41fe412a&code=Q2ZESjhDVUlmMmlFdmdoSXJMVDJRREJaSVEvUFRnSjhNZkk4ZEhZNmg1Y0l4eDJmMUxqd3ZraEd1WHZzdDU3dHBObVJObndrcXUxemIxVmEyUEo2cVM5MnNDek5WZ0NSNkQ0WWlRL1U2Ri8xbEFaK2YwSm1Wajg3OFh1cjlRL1JtcWwxTHZBMEc3SGwybWhQVnFtc2FoR2tRT0tvT0Jra2ZWUGlnREE4SS9IVVdGU3IzelRmbmh6ZldWTllBOHljS0xNY2U1NkYyenhya0U2U3BNQWtMUWtXMk1iOGFZb0U1QnMybU1nYmhLaE1DSGJqSCtsZ25ZTFlhbElDTkhBSHZYYUk1dz09&returnUrl=%2F'>clicking here</a>.

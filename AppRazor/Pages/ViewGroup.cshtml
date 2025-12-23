@@ -1,16 +1,25 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Identity;
+
+@using Models.Authorization;
+@inject IAuthorizationService _authService;
 @model AppRazor.Pages.ViewGroupModel
 @{
     ViewData["Title"] = "View group";
+    var authResult = await _authService.AuthorizeAsync(User, Model.MusicGroup, CrudOperations.Delete);
 }
 
 <!-- Page view-group -->
 <div class="container px-4 py-4" id="view-group">
     <h2 class="pb-2 border-bottom">
     View details of a music group
+    @if (authResult.Succeeded)
+    {
         <a href="~/Members/EditGroup?id=@Model.MusicGroup.MusicGroupId">
             <svg class="bi text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#edit" /></svg>
         </a>
+    }
     </h2>
     <form class="needs-validation" novalidate>
         <div class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">

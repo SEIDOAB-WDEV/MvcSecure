@@ -86,13 +86,14 @@
                 }
                 else
                 {
+                    <li class="nav-item"><a href="~/Members/SelectDataSource" class="nav-link">Select datasource</a></li>
+                    <li class="nav-item"><a href="~/Members/Seed" class="nav-link">Seed</a></li>
+
                     var usr = await userManager.GetUserAsync(User);
                     <li class="nav-item"><a href="~/Account/Logout" class="nav-link">@usr.FirstName Logout</a></li>
                 }
 
 
-                <li class="nav-item"><a href="~/Members/SelectDataSource" class="nav-link">Select datasource</a></li>
-                <li class="nav-item"><a href="~/Members/Seed" class="nav-link">Seed</a></li>
             </ul>
         </header>
     </div>
