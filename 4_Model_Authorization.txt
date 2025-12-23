@@ -16,16 +16,16 @@ AppRazor
 
 2. In ListOfGroups.cshtml.cs add namespaces
    using Microsoft.AspNetCore.Authorization;
-   using AppMusicRazor.ModelAuthorization;
+   using Models.Authorization;
 
 3. Inject IAuthorizationService into ListOfGroups constructor. Set a private field _authService to store the injected service
 
 4. In ListOfGroups.cshtml.cs modify OnPostDeleteGroup to check if User is Authorized to delete a group
-   var mg = await _service.ReadMusicGroupAsync(groupId, true);
-   var result = await _authorizationService.AuthorizeAsync(User, mg, MusicGroupOperations.Delete);
+   var mg = (await _service.ReadMusicGroupAsync(groupId, true)).Item;
+   var result = await _authorizationService.AuthorizeAsync(User, mg, CrudOperations.Delete);
    if (!result.Succeeded)
    {
-         return Forbid();
+            return Forbid();
    }
 
 5. In program.cs add model authorization service
