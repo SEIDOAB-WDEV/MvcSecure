@@ -31,7 +31,6 @@ namespace AppMvc.Controllers
         }
 
         #region ListOfGroups handling
-        [AllowAnonymous] // Allow anonymous access to view the list
         public async Task<IActionResult> ListOfGroups(int pagenr, string search)
         {
             //Create the viewModel
@@ -68,7 +67,6 @@ namespace AppMvc.Controllers
             return View("ListOfGroups", vm);
         }
 
-        [AllowAnonymous] // Allow anonymous access to search
         public async Task<IActionResult> SearchGroup(ListOfGroupsViewModel vm)
         {
             //Use the Service
@@ -85,7 +83,6 @@ namespace AppMvc.Controllers
         #endregion
 
         #region ViewGroup handling
-        [AllowAnonymous] // Allow anonymous access to view individual groups
         public async Task<IActionResult> ViewGroup(Guid id) 
         {
             Guid _groupId = id;

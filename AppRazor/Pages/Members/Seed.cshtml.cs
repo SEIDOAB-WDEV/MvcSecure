@@ -40,7 +40,7 @@ namespace AppRazor.Pages
                 }
                 await _admin_service.SeedAsync(NrOfItemsToSeed);
 
-                return Redirect($"~/ListOfGroups");
+                return Redirect($"~/Members/ListOfGroups");
             }
             return Page();
         }

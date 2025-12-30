@@ -6,6 +6,7 @@ using DbContext.Extensions;
 using DbRepos;
 using Models.Authorization;
 using Encryption.Extensions;
+using Encryption;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,9 +50,16 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; // Allow both HTTP and HTTPS in development
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.Cookie.Name = "GoodMusicAuth";
+
+    options.Events.OnSigningIn = context =>
+    {
+        context.Properties.IsPersistent = true;
+        return Task.CompletedTask;
+    };
 });
 
 #region Injecting a dependency service to read MusicWebApi
+builder.Services.AddTransient<JwtTokenHandler>();
 builder.Services.AddHttpClient(name: "MusicWebApi", configureClient: options =>
 {
     options.BaseAddress = new Uri(builder.Configuration["DataService:WebApiBaseUri"]);
@@ -59,7 +67,8 @@ builder.Services.AddHttpClient(name: "MusicWebApi", configureClient: options =>
         new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(
             mediaType: "application/json",
             quality: 1.0));
-});
+})
+.AddHttpMessageHandler<JwtTokenHandler>();
 
 //Model Authorization
 builder.Services.AddSingleton<IAuthorizationHandler, MusicGroupAuthorizationHandler>();
@@ -73,7 +82,7 @@ builder.Services.AddScoped<MusicGroupsDbRepos>();
 builder.Services.AddScoped<AlbumsDbRepos>();
 builder.Services.AddScoped<ArtistsDbRepos>();
 
-
+builder.Services.AddScoped<ILoginService, LoginServiceWapi>();
 builder.Services.AddSingleton<IMusicServiceActive, MusicServiceActive>();
 
 //Inject a Service based on active data source, 

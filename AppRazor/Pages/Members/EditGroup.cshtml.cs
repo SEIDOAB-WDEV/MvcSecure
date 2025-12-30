@@ -231,7 +231,7 @@ namespace AppRazor.Pages
 
             if (MusicGroupInput.StatusIM == StatusIM.Inserted)
             {
-                return Redirect($"~/ListOfGroups");
+                return Redirect($"~/Members/ListOfGroups");
             }
 
             return Redirect($"~/ViewGroup?id={MusicGroupInput.MusicGroupId}");

@@ -13,6 +13,9 @@ using AppRazor.SeidoHelpers;
 using static AppRazor.Pages.RegisterModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Models.DTO;
+using Services;
+using Encryption;
 
 namespace AppRazor.Pages.Account
 {
@@ -20,11 +23,13 @@ namespace AppRazor.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ILoginService _wapiLoginService;
 
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, ILoginService wapiLoginService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _wapiLoginService = wapiLoginService;
         }
 
         [BindProperty]
@@ -68,6 +73,26 @@ namespace AppRazor.Pages.Account
             var result = await _signInManager.PasswordSignInAsync(LoginCreds.Email, LoginCreds.Password, LoginCreds.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
+                // Retrieve user
+                var user = await _signInManager.UserManager.FindByEmailAsync(LoginCreds.Email);
+                _logger.LogInformation("User {Email} logged in successfully", user.Email);
+
+                // Authenticate with WebAPI to obtain JWT token
+                var wapiResponse = await _wapiLoginService.LoginUserAsync(new LoginCredentialsDto
+                {
+                    UserNameOrEmail = "dbo1",
+                    UserPassword = "dbo1"
+                });
+                _logger.LogInformation("WebAPI authentication succeeded for user {Email}", user.Email);
+
+                // Store the JWT token in the authentication properties
+                await JwtTokenStorage.StoreTokenAsync(
+                    _signInManager,
+                    user,
+                    LoginCreds.RememberMe,
+                    wapiResponse.Item.JwtToken);
+                _logger.LogInformation("WebAPI token stored for user {Email}", user.Email);
+
                 _logger.LogInformation("Login succeeded");
                 return LocalRedirect("/");
             }
