@@ -15,6 +15,9 @@ using Models;
 using Models.Authorization;
 using AppRazor.SeidoHelpers;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Services;
+using Models.DTO;
+using Encryption;
 
 namespace AppRazor.Pages
 {
@@ -27,6 +30,7 @@ namespace AppRazor.Pages
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly IEmailSender _emailSender;
+        private readonly ILoginService _wapiLoginService;
 
         [BindProperty]
         public UserIM RegUser { get; set; }
@@ -39,13 +43,15 @@ namespace AppRazor.Pages
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ILoginService wapiLoginService)
         {
             _logger = logger;
             _userManager = userManager;
             _userStore = userStore;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _wapiLoginService = wapiLoginService;
 
             if (!_userManager.SupportsUserEmail)
             {
@@ -98,7 +104,23 @@ namespace AppRazor.Pages
                 }
                 else
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User {Email} registered successfully", user.Email);
+
+                    // Authenticate with WebAPI to obtain JWT token
+                    var wapiResponse = await _wapiLoginService.LoginUserAsync(new LoginCredentialsDto
+                    {
+                        UserNameOrEmail = "dbo1",
+                        UserPassword = "dbo1"
+                    });
+                    _logger.LogInformation("WebAPI authentication succeeded for user {Email}", user.Email);
+
+                    // Store the JWT token in the authentication properties
+                    await JwtTokenStorage.StoreTokenAsync(
+                        _signInManager,
+                        user,
+                        true,
+                        wapiResponse.Item.JwtToken);
+                    _logger.LogInformation("WebAPI token stored for user {Email}", user.Email);
                     return LocalRedirect(returnUrl);
                 }
             }

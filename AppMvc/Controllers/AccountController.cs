@@ -8,6 +8,8 @@ using AppMvc.Models;
 using AppMvc.SeidoHelpers;
 using Encryption;
 using Models.Authorization;
+using Services;
+using Models.DTO;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,12 +24,14 @@ namespace AppMvc.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IUserEmailStore<User> _emailStore;
         private Encryptions _encryptions;
+        private readonly ILoginService _wapiLoginService;
 
         private record ConfirmationToken(string userId, string token);
 
         public AccountController(ILogger<AccountController> logger, UserManager<User> userManager,
                                   IUserStore<User> userStore, SignInManager<User> signInManager,
-                                  IEmailSender emailSender, Encryptions encryptions)
+                                  IEmailSender emailSender, Encryptions encryptions,
+                                  ILoginService wapiLoginService)
         {
             _logger = logger;
             _userManager = userManager;
@@ -36,6 +40,7 @@ namespace AppMvc.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _encryptions = encryptions;
+            _wapiLoginService = wapiLoginService;
 
             if (!_userManager.SupportsUserEmail)
             {
@@ -134,7 +139,24 @@ namespace AppMvc.Controllers
                 }
                 else
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User {Email} registered successfully", user.Email);
+
+                    // Authenticate with WebAPI to obtain JWT token
+                    var wapiResponse = await _wapiLoginService.LoginUserAsync(new LoginCredentialsDto
+                    {
+                        UserNameOrEmail = "dbo1",
+                        UserPassword = "dbo1"
+                    });
+                    _logger.LogInformation("WebAPI authentication succeeded for user {Email}", user.Email);
+
+                    // Store the JWT token in the authentication properties
+                    await JwtTokenStorage.StoreTokenAsync(
+                        _signInManager,
+                        user,
+                        true,
+                        wapiResponse.Item.JwtToken);
+                    _logger.LogInformation("WebAPI token stored for user {Email}", user.Email);
+
                     return LocalRedirect(returnUrl);
                 }
             }
@@ -177,8 +199,25 @@ namespace AppMvc.Controllers
             var result = await _signInManager.PasswordSignInAsync(vm.LoginCreds.Email, vm.LoginCreds.Password, vm.LoginCreds.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                _logger.LogInformation("Login succeeded");
-                return LocalRedirect("/");
+                // Retrieve user
+                var user = await _signInManager.UserManager.FindByEmailAsync(vm.LoginCreds.Email);
+                _logger.LogInformation("User {Email} logged in successfully", user.Email);
+
+                // Authenticate with WebAPI to obtain JWT token
+                var wapiResponse = await _wapiLoginService.LoginUserAsync(new LoginCredentialsDto
+                {
+                    UserNameOrEmail = "dbo1",
+                    UserPassword = "dbo1"
+                });
+                _logger.LogInformation("WebAPI authentication succeeded for user {Email}", user.Email);
+
+                // Store the JWT token in the authentication properties
+                await JwtTokenStorage.StoreTokenAsync(
+                    _signInManager,
+                    user,
+                    vm.LoginCreds.RememberMe,
+                    wapiResponse.Item.JwtToken);
+                _logger.LogInformation("WebAPI token stored for user {Email}", user.Email);                return LocalRedirect("/");
             }
             if (result.RequiresTwoFactor)
             {
