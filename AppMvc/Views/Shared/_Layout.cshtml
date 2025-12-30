@@ -75,7 +75,8 @@
             <ul class="nav nav-pills">
                 <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link" aria-current="page">Home</a></li>
                 <li class="nav-item"><a asp-area="" asp-controller="Group" asp-action="ListOfGroups" class="nav-link" aria-current="list-of-groups">Famous groups</a></li>
-
+                <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="DataSourceInfo" class="nav-link" aria-current="overview">Data source info</a></li>
+                
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item"><a asp-area="" asp-controller="DataSource" asp-action="Index" class="nav-link">Select datasource</a></li>
